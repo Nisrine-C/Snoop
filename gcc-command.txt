@@ -1,0 +1,1 @@
+gcc main.c -o example.exe -O1 -Wall -std=c99 -Wno-missc main.c -o example.exe who-missing-braces -I include/ -L lib/ -lraylib -lopengl32 --L lib/ -lraylib -lopenlgdi32 -lwinmm
