@@ -256,6 +256,7 @@ void UpdateGame(void)
               framesCounter = 0;
               gameOver = false;
               soundPlayedWin = false;
+              isWin = false;
               PlayMusicStream(music);
               for (int i = 0; i < MAX_BIRDS; i++) {
                 birds[i].active = true;
