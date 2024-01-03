@@ -7,13 +7,13 @@
 //----------------------------------------------------------------------------------
 // Some Defines
 //----------------------------------------------------------------------------------
-#define SNAKE_LENGTH   256
-#define SQUARE_SIZE     90
-#define BORDER_SIZE     20
-#define MAX_BLOCKS1      8
-#define MAX_BLOCKS2     14
-#define MAX_BIRDS        4
-#define COLUMNS          9
+
+#define SQUARE_SIZE     90 // La taille d'un block ( graphique )
+#define BORDER_SIZE     20 // Offset 
+#define MAX_BLOCKS1      8 // Nombre des blocks pour le niveau 1
+#define MAX_BLOCKS2     14 // Nombre des blocks pour le niveau 2
+#define MAX_BIRDS        4 // Nombre des oiseaux
+#define COLUMNS          9 
 #define ROWS             8
 
 //----------------------------------------------------------------------------------
@@ -24,7 +24,6 @@ typedef struct Bird {
     Vector2 size;
     bool active;
 } Bird;
-
 
 typedef struct Snoopy {
     Vector2 position;
@@ -62,6 +61,7 @@ static bool gameOver = false;
 static int level = 1;
 static int MAX_BLOCKS = 0;
 static bool isWin = false;
+static int lives = 2;
 
 static Music music;
 static Sound birdsFx;
@@ -261,12 +261,18 @@ void UpdateGame(void)
               for (int i = 0; i < MAX_BIRDS; i++) {
                 birds[i].active = true;
               }
+              printf("%d",lives);
+              if(lives==0){
+                level = 1;
+              }
               InitLevel(level);
+              lives--;
             }else{
               if(level == 1){
                 level++;
                 framesCounter = 0;
                 gameOver = false;
+                isWin = false;
                 soundPlayedWin = false;
                 PlayMusicStream(music);
                 for (int i = 0; i < MAX_BIRDS; i++) {
@@ -274,11 +280,12 @@ void UpdateGame(void)
                 }
                 InitLevel(level);
               }else{
-                score = 0;
                 level = 1;
+                lives = 2;
                 framesCounter = 0;
                 gameOver = false;
                 soundPlayedWin = false;
+                isWin = false;
                 PlayMusicStream(music);
                 for (int i = 0; i < MAX_BIRDS; i++) {
                   birds[i].active = true;
